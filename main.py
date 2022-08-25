@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     user_train, usernum_train, itemnum, user_input_test, user_test, user_input_valid, user_valid = data_load(args.dataset, args.K)    
 
-    sampler = WarpSampler(user_train, usernum_train, itemnum, batch_size=args.batch_size, maxlen=args.K, n_workers=3)
+    sampler = WarpSampler(user_train, usernum_train, itemnum, sample_function_mixed, batch_size=args.batch_size, maxlen=args.K, n_workers=3)
 
     sampler_test = DataLoader(user_input_test, user_test, itemnum, params)
 
