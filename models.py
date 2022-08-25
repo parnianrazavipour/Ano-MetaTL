@@ -111,7 +111,7 @@ class MetaTL(nn.Module):
 
             p_score, n_score = self.embedding_learner(sup_neg_e1, sup_neg_e2, rel_s, K)
 
-            y = torch.Tensor([1]).to(self.device)
+            y = torch.ones_like(p_score).to(self.device)
             self.zero_grad()
             loss = self.loss_func(p_score, n_score, y)
             loss.backward(retain_graph=True)

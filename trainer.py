@@ -52,15 +52,20 @@ class Trainer:
         if not iseval:
             self.optimizer.zero_grad()
             p_score, n_score = self.MetaTL(task, iseval, curr_rel)
-            y = torch.Tensor([1]).to(self.device)
+            y = torch.ones_like(p_score).to(self.device)
             loss = self.MetaTL.loss_func(p_score, n_score, y)
             loss.backward()
             self.optimizer.step()
         elif curr_rel != '':
             p_score, n_score = self.MetaTL(task, iseval, curr_rel)
-            y = torch.Tensor([1]).to(self.device)
+            y = torch.ones_like(p_score).to(self.device)
             loss = self.MetaTL.loss_func(p_score, n_score, y)
         return loss, p_score, n_score
+
+    def save_model(self, save_location='models'):
+        if not os.path.exists(save_location):
+            os.mkdir(save_location)
+        torch.save(self.MetaTL.state_dict(), os.path.join(save_location, 'metatl.pt'))
 
     def train(self):
         # initialization
@@ -84,7 +89,7 @@ class Trainer:
 
                 print('Epoch  {} Testing...'.format(e))
                 test_data = self.eval(istest=True, epoch=e)
-                
+                self.save_model()
         print('Finish')
 
     def eval(self, istest=False, epoch=None):
