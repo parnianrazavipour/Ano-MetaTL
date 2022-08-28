@@ -32,7 +32,7 @@ def sample(user_train, usernum, itemnum, maxlen):
         idx = maxlen - 1
 
         ts = set(user_train[user])
-        for i in reversed(user_train[user][min(0, nxt_idx - 1 - maxlen): nxt_idx - 1]):
+        for i in reversed(user_train[user][:nxt_idx]):
             seq[idx] = i
             pos[idx] = nxt
             if nxt != 0: neg[idx] = random_neq(1, itemnum + 1, ts)
@@ -102,16 +102,15 @@ def sample_ano(user_train, usernum, itemnum, batch_size, maxlen, result_queue, S
             support_triples, support_negative_triples, \
                 query_triples, negative_triples, curr_rel = sample(user_train, usernum, itemnum, maxlen)
             support = [*np.array(support_triples)[:, 0], np.array(support_triples)[-1, -1]]
-            query_pos = [*support[1:], query_triples[0][2]]
-            query_neg = [*support[1:], negative_triples[0][2]]
+            query_norm = [*support[1:], query_triples[0][2]]
+            query_ano = [*support[1:], negative_triples[0][2]]
             support_neg = [*np.array(support_negative_triples)[:, 2]]
             support_label = 0
             if np.random.random() < ctr:
                 support[-1] = support_neg[-1]
                 support_label = 1
-            one_batch.append([curr_rel, support, support_label, query_pos, query_neg])
-        curr_rel, support, support_label, query_pos, query_neg = zip(*one_batch)
-        result_queue.put([curr_rel, support, support_label, query_pos, query_neg])
+            one_batch.append([curr_rel, support, support_label, query_norm, query_ano])
+        result_queue.put(one_batch)
 
 
 class WarpSampler(object):
