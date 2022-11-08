@@ -89,7 +89,10 @@ class Trainer:
 
                 print('Epoch  {} Testing...'.format(e))
                 test_data = self.eval(istest=True, epoch=e)
-                self.save_model()
+                if best_value < valid_data['MRR']:
+                    best_value = valid_data['MRR']
+                    print('New model saved.')
+                    self.save_model()
         print('Finish')
 
     def eval(self, istest=False, epoch=None):
