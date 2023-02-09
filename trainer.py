@@ -81,17 +81,17 @@ class Trainer:
             # print the loss on specific epoch
             if e % self.print_epoch == 0:
                 loss_num = loss.item()
-                print("Epoch: {}\tLoss: {:.4f}".format(e, loss_num))
+                sys.stdout.write("Epoch: {}\tLoss: {:.4f}".format(e, loss_num))
             # do evaluation on specific epoch
             if e % self.eval_epoch == 0 and e != 0:
-                print('Epoch  {} Validating...'.format(e))
+                sys.stdout.write('Epoch  {} Validating...'.format(e))
                 valid_data = self.eval(istest=False, epoch=e)
 
-                print('Epoch  {} Testing...'.format(e))
+                sys.stdout.write('Epoch  {} Testing...'.format(e))
                 test_data = self.eval(istest=True, epoch=e)
                 if best_value < valid_data['MRR']:
                     best_value = valid_data['MRR']
-                    print('New model saved.')
+                    sys.stdout.write('New model saved.')
                     self.save_model()
         print('Finish')
 
@@ -139,10 +139,10 @@ class Trainer:
 
         
         if istest:
-            print("TEST: \tMRR: {:.3f}\tNDCG@10: {:.3f}\tNDCG@5: {:.3f}\tNDCG@1: {:.3f}\tHits@10: {:.3f}\tHits@5: {:.3f}\tHits@1: {:.3f}\r".format(
+            sys.stdout.write("TEST: \tMRR: {:.3f}\tNDCG@10: {:.3f}\tNDCG@5: {:.3f}\tNDCG@1: {:.3f}\tHits@10: {:.3f}\tHits@5: {:.3f}\tHits@1: {:.3f}\r".format(
                     temp['MRR'], temp['NDCG@10'], temp['NDCG@5'], temp['NDCG@1'], temp['Hits@10'], temp['Hits@5'], temp['Hits@1']))
         else:
-            print("VALID: \tMRR: {:.3f}\tNDCG@10: {:.3f}\tNDCG@5: {:.3f}\tNDCG@1: {:.3f}\tHits@10: {:.3f}\tHits@5: {:.3f}\tHits@1: {:.3f}\r".format(
+            sys.stdout.write("VALID: \tMRR: {:.3f}\tNDCG@10: {:.3f}\tNDCG@5: {:.3f}\tNDCG@1: {:.3f}\tHits@10: {:.3f}\tHits@5: {:.3f}\tHits@1: {:.3f}\r".format(
                     temp['MRR'], temp['NDCG@10'], temp['NDCG@5'], temp['NDCG@1'], temp['Hits@10'], temp['Hits@5'], temp['Hits@1']))
 
         return data
