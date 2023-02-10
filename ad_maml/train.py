@@ -35,7 +35,7 @@ def train_model(model, embedder, train_sampler, val_dataset, test_dataset, args)
 
             meta_train_loss += (query_norm_loss + query_ano_loss) / 2
         meta_train_loss = meta_train_loss / len(batch)
-        print(f'Iteration: {iter}, Meta Train Loss: {meta_train_loss.item()}')
+        # print(f'Iteration: {iter}, Meta Train Loss: {meta_train_loss.item()}')
 
         optimizer.zero_grad()
         meta_train_loss.backward()
