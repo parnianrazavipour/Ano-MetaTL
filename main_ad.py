@@ -18,9 +18,9 @@ from utils import data_load
 def get_params():
     args = argparse.ArgumentParser()
 
-    args.add_argument("-data", "--dataset", default="electronics", type=str)
+    args.add_argument("-data", "--dataset", default="beauty", type=str)
     args.add_argument("--seed", default=None, type=int)
-    args.add_argument("--K", default=3, type=int)
+    args.add_argument("--K", default=5, type=int)
     args.add_argument("--embed_dim", default=100, type=int)
     args.add_argument("--batch_size", default=1024, type=int)
     args.add_argument("--adapt_lr", default=0.01, type=float)
@@ -30,7 +30,7 @@ def get_params():
     args.add_argument("--dropout_p", default=0.5, type=float)
     args.add_argument("--device", default="cpu", type=str)
     args.add_argument("--embeder_path", default=None, type=str)
-    args.add_argument("--eval_path", default="data/electronics/electronics_test_new_user.csv", type=str)
+    args.add_argument("--eval_path", default="data/beauty/beauty_test_new_user.csv", type=str)
     args.add_argument("--model_save_path", default="models/maml_ad.pt", type=str)
 
     args = args.parse_args()
