@@ -10,7 +10,7 @@ def get_params():
     args = argparse.ArgumentParser()
     args.add_argument("-data", "--dataset", default="beauty", type=str)
     args.add_argument("-seed", "--seed", default=None, type=int)
-    args.add_argument("-K", "--K", default=3, type=int) #NUMBER OF SHOT
+    args.add_argument("-K", "--K", default=5, type=int) #NUMBER OF SHOT
 
     args.add_argument("-dim", "--embed_dim", default=100, type=int)
     args.add_argument("-bs", "--batch_size", default=1024, type=int)
